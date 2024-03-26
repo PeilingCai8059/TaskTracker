@@ -1,0 +1,23 @@
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+       <a class= "navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Todo Tracker</a>
+    </div>
+</div>
+
+<div class="nav-scrollable" >
+    <div class="nav-item px-3">
+        <nav class="nav-link" >
+            <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> 
+            <a asp-area="" asp-controller="Home" asp-action="Index"><span class="navbar-link">Home</span></a> 
+        </nav>
+    </div>
+
+
+    <div class="nav-item px-3">
+        <nav class="nav-link" >
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> 
+            <a asp-area="" asp-controller="Todos" asp-action="Index"><span class="navbar-link">Todo</span></a>
+        </nav>
+    </div>
+</div>
