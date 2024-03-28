@@ -13,7 +13,9 @@ public class Task
     [Required]
     public string Title { get; set; }
     public string? Description { get; set; }
-    public Task? ParentTask {get;set;}
+    
+    public int? ParentTaskId { get; set; } // Changed to int
+    public Task? ParentTask { get; set; }
     public ICollection<Task>? subTasks {get;set;}
     
     [Required] 
@@ -26,6 +28,7 @@ public class Task
     [Display(Name = "Due Date")]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
     [DataType(DataType.Date)]
+    [ValidateDueDate]
     public DateTime DueDate { get; set; }
 
     [Display(Name = "Reminder")]
@@ -42,4 +45,19 @@ public class Task
     public String? Location  { get; set; }
 
     public ICollection<User>? Collaborators {get;set;} 
+}
+
+public class ValidateDueDateAttribute : ValidationAttribute
+{
+    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+    {
+        var task = (Task)validationContext.ObjectInstance;
+
+        if (task.DueDate < task.StartDate)
+        {
+            return new ValidationResult("Due Date cannot be before the Start Date.");
+        }
+
+        return ValidationResult.Success;
+    }
 }

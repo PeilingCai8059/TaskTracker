@@ -76,8 +76,8 @@
             <td class="item-description">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-                                    <td>
-                @Html.DisplayFor(modelItem => item.ParentTask)
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentTask.Title)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)

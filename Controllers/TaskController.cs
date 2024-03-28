@@ -103,23 +103,34 @@ namespace TaskTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location")]Models.Task task)
         {
             Console.WriteLine("check for parent") ;
-             Console.WriteLine(task.ParentTask) ;
+            Console.WriteLine(task.Priority) ;
+             Console.WriteLine(task.ParentTaskId) ;
+             Console.WriteLine(task.Status) ;
+            if (task.ParentTaskId != null)
+            {
+                task.ParentTask = await _context.Task.FindAsync(task.ParentTaskId);
+            }
             if (ModelState.IsValid)
             {
-                var parent = await _context.Task.FindAsync(task.ParentTask);
+                
                 _context.Add(task);
                 await _context.SaveChangesAsync();
+
                 if(task.ParentTask != null ){
                     Console.WriteLine("has parent") ;
-                    Console.WriteLine(task.ParentTask) ;
-                    parent.subTasks ??= new List<Models.Task>(); 
-                    parent.subTasks.Add(task); 
+                    Console.WriteLine(task.ParentTask.Title) ;
+                    task.ParentTask.subTasks ??= new List<Models.Task>(); 
+                    task.ParentTask.subTasks.Add(task); 
                     await _context.SaveChangesAsync();
                 }
                 return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                Console.WriteLine("modelState invalid") ;
             }
             return View(task);
         }
@@ -146,11 +157,15 @@ namespace TaskTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location")] Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location")] Models.Task task)
         {
             if (id != task.Id)
             {
                 return NotFound();
+            }
+            if (task.ParentTaskId != null)
+            {
+                task.ParentTask = await _context.Task.FindAsync(task.ParentTaskId);
             }
 
             if (ModelState.IsValid)
@@ -172,6 +187,9 @@ namespace TaskTracker.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
+            }else
+            {
+                Console.WriteLine("modelState invalid") ;
             }
             return View(task);
         }
