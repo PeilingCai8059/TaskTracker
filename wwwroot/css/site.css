@@ -66,7 +66,13 @@ color: rgb(14, 82, 192)
   display: flex; 
   justify-content: right;
 }
-
-.item-description{
-
+.form-group{
+  margin-top: 0.5rem;
+}
+.btn-primary{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.subTask-Indent{
+  padding-left: 1rem;
 }

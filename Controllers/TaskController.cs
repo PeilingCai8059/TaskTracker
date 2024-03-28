@@ -91,7 +91,7 @@ namespace TaskTracker.Controllers
             var categories = _context.Category.ToList();
             var priorities = _context.Priority.ToList();
             var status = _context.Status.ToList();
-            var parentTask  = _context.Task.ToList();
+            var parentTask  = _context.Task.Where(t => t.ParentTask == null).ToList();
            
             ViewBag.Categories = new SelectList(categories,"categoryName", "categoryName");
             ViewBag.Priorities = new SelectList(priorities,"priorityName", "priorityName");
@@ -105,33 +105,23 @@ namespace TaskTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location")]Models.Task task)
         {
-            Console.WriteLine("check for parent") ;
-            Console.WriteLine(task.Priority) ;
-             Console.WriteLine(task.ParentTaskId) ;
-             Console.WriteLine(task.Status) ;
             if (task.ParentTaskId != null)
             {
                 task.ParentTask = await _context.Task.FindAsync(task.ParentTaskId);
             }
             if (ModelState.IsValid)
-            {
-                
+            { 
                 _context.Add(task);
                 await _context.SaveChangesAsync();
 
                 if(task.ParentTask != null ){
-                    Console.WriteLine("has parent") ;
-                    Console.WriteLine(task.ParentTask.Title) ;
                     task.ParentTask.subTasks ??= new List<Models.Task>(); 
                     task.ParentTask.subTasks.Add(task); 
                     await _context.SaveChangesAsync();
                 }
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                Console.WriteLine("modelState invalid") ;
-            }
+
             return View(task);
         }
 
@@ -187,10 +177,8 @@ namespace TaskTracker.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }else
-            {
-                Console.WriteLine("modelState invalid") ;
             }
+
             return View(task);
         }
 
@@ -218,11 +206,10 @@ namespace TaskTracker.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var task = await _context.Task.FindAsync(id);
-            if (task != null)
-            {
+            if (task != null )
+            {   
                 _context.Task.Remove(task);
             }
-
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

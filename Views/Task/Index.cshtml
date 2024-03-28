@@ -43,9 +43,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Tasks![0].Description)
             </th>
-             <th>
-                @Html.DisplayNameFor(model => model.Tasks![0].ParentTask)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tasks![0].StartDate)
             </th>
@@ -69,39 +66,78 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Tasks) {
-        <tr>
+    @if(item.ParentTask != null )
+    {
+        continue;
+    }
+    <tr>
+        <td>
+            <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a> 
+        </td>
+        <td class="item-description">
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DueDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Priority)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>
+    </tr>
+    
+        @if(item.subTasks != null) {
+            @foreach(var subItem in item.subTasks){
+                <tr>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a> 
+                <span class="subTask-Indent">
+                    &#10147;&nbsp; <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => subItem.Title)</a> 
+                </span>
+               
             </td>
             <td class="item-description">
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => subItem.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ParentTask.Title)
+                @Html.DisplayFor(modelItem => subItem.StartDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
+                @Html.DisplayFor(modelItem => subItem.DueDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
+                @Html.DisplayFor(modelItem => subItem.Category)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
+                @Html.DisplayFor(modelItem => subItem.Priority)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Priority)
+                @Html.DisplayFor(modelItem => subItem.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => subItem.Location)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@subItem.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@subItem.Id">Delete</a>
             </td>
         </tr>
+            }
+        }
 }
     </tbody>
 </table>

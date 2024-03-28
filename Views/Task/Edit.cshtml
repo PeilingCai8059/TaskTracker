@@ -26,6 +26,7 @@
             <div class="form-group">
                 <label asp-for="ParentTaskId" class="control-label"></label>
                 <select asp-for="ParentTaskId" class="form-control" asp-items="ViewBag.ParentTask">
+                <option value="">--Select Main Task--</option>
                 </select>
                 <span asp-validation-for="ParentTaskId" class="text-danger"></span>
             </div>

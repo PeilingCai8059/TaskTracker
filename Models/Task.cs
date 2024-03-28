@@ -13,7 +13,7 @@ public class Task
     [Required]
     public string Title { get; set; }
     public string? Description { get; set; }
-    
+    [Display(Name = "Parent Task")]
     public int? ParentTaskId { get; set; } // Changed to int
     public Task? ParentTask { get; set; }
     public ICollection<Task>? subTasks {get;set;}
