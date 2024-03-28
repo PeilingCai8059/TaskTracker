@@ -1,64 +1,89 @@
-@model IEnumerable<TaskTracker.Models.Task>
+@model TaskTracker.Models.TaskCategoryViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<br>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div  class="toolBar" >
+    <div>
+        <a asp-action="Create"><button class="create-botton"> + New Task</button></a>
+    </div>
+        <form asp-controller="Task" asp-action="Index" method="get">
+            
+            <select asp-for="TaskCategory" asp-items="Model.Categories" class="dropDownList" >
+                    <option value="">-Category-</option>
+            </select>
+             <select asp-for="TaskPriority" asp-items="Model.Priorities" class="dropDownList" >
+                    <option value="">-Priority-</option>
+            </select>
+            <select asp-for="TaskStatus" asp-items="Model.Status" class="dropDownList" >
+                    <option value="">-Status-</option>
+            </select>
+            <input type="text" name="SearchString" />
+            <input type="submit" value="Search" />
+          
+        </form>
+    </div>
+<div  class="viewBar" >
+    <div>
+        <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> List View</button></a>
+    </div>
+    <div>
+        <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> Calender View</button></a>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Tasks![0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Tasks![0].Description)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Tasks![0].ParentTask)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayNameFor(model => model.Tasks![0].StartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DueDate)
+                @Html.DisplayNameFor(model => model.Tasks![0].DueDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReminderTime)
+                @Html.DisplayNameFor(model => model.Tasks![0].Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
+                @Html.DisplayNameFor(model => model.Tasks![0].Priority)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Priority)
+                @Html.DisplayNameFor(model => model.Tasks![0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.location)
+                @Html.DisplayNameFor(model => model.Tasks![0].Location)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Tasks) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a> 
             </td>
-            <td>
+            <td class="item-description">
                 @Html.DisplayFor(modelItem => item.Description)
+            </td>
+                                    <td>
+                @Html.DisplayFor(modelItem => item.ParentTask)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReminderTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category)
@@ -70,11 +95,10 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.location)
+                @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

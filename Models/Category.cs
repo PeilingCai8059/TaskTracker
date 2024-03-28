@@ -4,9 +4,9 @@ namespace TaskTracker.Models;
 
 public class Category
 {
-    public int Id { get; set; }
+    public int categoryId { get; set; }
     
     [Required]
-    public string name{get;set;}
+    public string categoryName{get;set;}
     
 }

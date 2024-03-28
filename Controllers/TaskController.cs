@@ -20,9 +20,46 @@ namespace TaskTracker.Controllers
         }
 
         // GET: Task
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string taskCategory, string taskPriority, string taskStatus, string searchString)
         {
-            return View(await _context.Task.ToListAsync());
+            IQueryable<string> categoryQuery = from m in _context.Category
+                                    orderby m.categoryName
+                                    select m.categoryName;
+            IQueryable<string> priorityQuery = from m in _context.Priority
+                                    orderby m.priorityName
+                                    select m.priorityName;
+            IQueryable<string> statusQuery = from m in _context.Status
+                                    orderby m.statusName
+                                    select m.statusName;
+            var tasks = from t in _context.Task
+                        select t ;
+            if (!String.IsNullOrEmpty(searchString)){
+                tasks = tasks.Where( s => 
+                    s.Title.ToLower()!.Contains(searchString.ToLower())
+                    ||s.Description.ToLower()!.Contains(searchString.ToLower())) ;
+            }
+
+            if (!string.IsNullOrEmpty(taskCategory))
+            {
+                tasks = tasks.Where(x => x.Category == taskCategory);
+            }
+             if (!string.IsNullOrEmpty(taskPriority))
+            {
+                tasks = tasks.Where(x => x.Priority == taskPriority);
+            }
+            if (!string.IsNullOrEmpty(taskStatus))
+            {
+                tasks = tasks.Where(x => x.Status == taskStatus);
+            }
+
+            var taskCategoryVM = new TaskCategoryViewModel{
+                Categories = new SelectList(await categoryQuery.Distinct().ToListAsync()),
+                Priorities = new SelectList(await priorityQuery.Distinct().ToListAsync()),
+                Status = new SelectList(await statusQuery.Distinct().ToListAsync()),
+                Tasks = await tasks.ToListAsync()
+            };
+
+            return View(taskCategoryVM);
         }
 
         // GET: Task/Details/5
@@ -46,20 +83,42 @@ namespace TaskTracker.Controllers
         // GET: Task/Create
         public IActionResult Create()
         {
+            LoadInfo();
             return View();
         }
-
+        private void LoadInfo()
+        {
+            var categories = _context.Category.ToList();
+            var priorities = _context.Priority.ToList();
+            var status = _context.Status.ToList();
+            var parentTask  = _context.Task.ToList();
+           
+            ViewBag.Categories = new SelectList(categories,"categoryName", "categoryName");
+            ViewBag.Priorities = new SelectList(priorities,"priorityName", "priorityName");
+            ViewBag.Status = new SelectList(status,"statusName", "statusName");
+            ViewBag.ParentTask = new SelectList(parentTask, "Id","Title");
+        }
         // POST: Task/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,StartDate,DueDate,ReminderTime,Category,Priority,Status,location")] Models.Task task)
+        public async Task<IActionResult> Create(Models.Task task)
         {
+            Console.WriteLine("check for parent") ;
+             Console.WriteLine(task.ParentTask) ;
             if (ModelState.IsValid)
             {
+                var parent = await _context.Task.FindAsync(task.ParentTask);
                 _context.Add(task);
                 await _context.SaveChangesAsync();
+                if(task.ParentTask != null ){
+                    Console.WriteLine("has parent") ;
+                    Console.WriteLine(task.ParentTask) ;
+                    parent.subTasks ??= new List<Models.Task>(); 
+                    parent.subTasks.Add(task); 
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(task);
@@ -78,6 +137,7 @@ namespace TaskTracker.Controllers
             {
                 return NotFound();
             }
+            LoadInfo();
             return View(task);
         }
 
@@ -86,7 +146,7 @@ namespace TaskTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,StartDate,DueDate,ReminderTime,Category,Priority,Status,location")] Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location")] Models.Task task)
         {
             if (id != task.Id)
             {

@@ -10,22 +10,22 @@ using TaskTracker.Models;
 
 namespace TaskTracker.Controllers
 {
-    public class UserController : Controller
+    public class PriorityController : Controller
     {
         private readonly TaskTrackerContext _context;
 
-        public UserController(TaskTrackerContext context)
+        public PriorityController(TaskTrackerContext context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Priority
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Priority.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Priority/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.userId == id);
-            if (user == null)
+            var priority = await _context.Priority
+                .FirstOrDefaultAsync(m => m.priorityId == id);
+            if (priority == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(priority);
         }
 
-        // GET: User/Create
+        // GET: Priority/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Priority/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,firstName,lasName,Email,Password")] User user)
+        public async Task<IActionResult> Create([Bind("priorityId,priorityName")] Priority priority)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(priority);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(priority);
         }
 
-        // GET: User/Edit/5
+        // GET: Priority/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var priority = await _context.Priority.FindAsync(id);
+            if (priority == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(priority);
         }
 
-        // POST: User/Edit/5
+        // POST: Priority/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,firstName,lasName,Email,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("priorityId,priorityName")] Priority priority)
         {
-            if (id != user.userId)
+            if (id != priority.priorityId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace TaskTracker.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(priority);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.userId))
+                    if (!PriorityExists(priority.priorityId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace TaskTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(priority);
         }
 
-        // GET: User/Delete/5
+        // GET: Priority/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.userId == id);
-            if (user == null)
+            var priority = await _context.Priority
+                .FirstOrDefaultAsync(m => m.priorityId == id);
+            if (priority == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(priority);
         }
 
-        // POST: User/Delete/5
+        // POST: Priority/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user != null)
+            var priority = await _context.Priority.FindAsync(id);
+            if (priority != null)
             {
-                _context.User.Remove(user);
+                _context.Priority.Remove(priority);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool PriorityExists(int id)
         {
-            return _context.User.Any(e => e.userId == id);
+            return _context.Priority.Any(e => e.priorityId == id);
         }
     }
 }

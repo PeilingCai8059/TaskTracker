@@ -6,10 +6,10 @@ public class Task
 {
     public int Id { get; set; }
 
-    [Required]
-    public User user { get; set; }
 
-    [StringLength(20, MinimumLength = 3)]
+    public User? user { get; set; }
+
+    [StringLength(40, MinimumLength = 3)]
     [Required]
     public string Title { get; set; }
     public string? Description { get; set; }
@@ -33,15 +33,13 @@ public class Task
     [DataType(DataType.DateTime)]
     public DateTime? ReminderTime { get; set; }
 
-    [Required]
-    public String Category  { get; set; }
-    [Required]
-    public String Priority  { get; set; }
-    [Required]
-    public String Status  { get; set; }
+    public String? Category  { get; set; }
+    
+    public String? Priority  { get; set; }
+    
+    public String? Status  { get; set; }
 
-    public String? location  { get; set; }
+    public String? Location  { get; set; }
 
-    [Required]
     public ICollection<User>? Collaborators {get;set;} 
 }

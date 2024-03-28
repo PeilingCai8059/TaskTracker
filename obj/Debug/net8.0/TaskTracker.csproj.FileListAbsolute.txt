@@ -276,3 +276,4 @@
 /Users/peiling/Desktop/2024 Spring/TaskTracker/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Windows.Extensions.dll
 /Users/peiling/Desktop/2024 Spring/TaskTracker/obj/Debug/net8.0/TaskTracker.csproj.AssemblyReference.cache
 /Users/peiling/Desktop/2024 Spring/TaskTracker/obj/Debug/net8.0/TaskTrac.2CCAFB19.Up2Date
+/Users/peiling/Desktop/2024 Spring/TaskTracker/obj/Debug/net8.0/TaskTracker.sourcelink.json

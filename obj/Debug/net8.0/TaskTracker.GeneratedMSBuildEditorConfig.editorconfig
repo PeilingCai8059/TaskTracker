@@ -54,12 +54,52 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Priority/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Priority/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Priority/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Priority/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Priority/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Status/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Status/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Status/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Status/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Status/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/peiling/Desktop/2024 Spring/TaskTracker/Views/Task/Create.cshtml]

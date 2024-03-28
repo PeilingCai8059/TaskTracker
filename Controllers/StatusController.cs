@@ -10,22 +10,22 @@ using TaskTracker.Models;
 
 namespace TaskTracker.Controllers
 {
-    public class UserController : Controller
+    public class StatusController : Controller
     {
         private readonly TaskTrackerContext _context;
 
-        public UserController(TaskTrackerContext context)
+        public StatusController(TaskTrackerContext context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Status
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Status.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Status/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.userId == id);
-            if (user == null)
+            var status = await _context.Status
+                .FirstOrDefaultAsync(m => m.statusId == id);
+            if (status == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(status);
         }
 
-        // GET: User/Create
+        // GET: Status/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Status/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,firstName,lasName,Email,Password")] User user)
+        public async Task<IActionResult> Create([Bind("statusId,statusName")] Status status)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(status);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(status);
         }
 
-        // GET: User/Edit/5
+        // GET: Status/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var status = await _context.Status.FindAsync(id);
+            if (status == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(status);
         }
 
-        // POST: User/Edit/5
+        // POST: Status/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,firstName,lasName,Email,Password")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("statusId,statusName")] Status status)
         {
-            if (id != user.userId)
+            if (id != status.statusId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace TaskTracker.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(status);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.userId))
+                    if (!StatusExists(status.statusId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace TaskTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(status);
         }
 
-        // GET: User/Delete/5
+        // GET: Status/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.userId == id);
-            if (user == null)
+            var status = await _context.Status
+                .FirstOrDefaultAsync(m => m.statusId == id);
+            if (status == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(status);
         }
 
-        // POST: User/Delete/5
+        // POST: Status/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            if (user != null)
+            var status = await _context.Status.FindAsync(id);
+            if (status != null)
             {
-                _context.User.Remove(user);
+                _context.Status.Remove(status);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool StatusExists(int id)
         {
-            return _context.User.Any(e => e.userId == id);
+            return _context.Status.Any(e => e.statusId == id);
         }
     }
 }
