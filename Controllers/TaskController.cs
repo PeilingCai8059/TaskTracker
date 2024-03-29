@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TaskTracker.Data;
 using TaskTracker.Models;
 
@@ -58,34 +59,50 @@ namespace TaskTracker.Controllers
                 Status = new SelectList(await statusQuery.Distinct().ToListAsync()),
                 Tasks = await tasks.ToListAsync()
             };
-
             return View(taskCategoryVM);
         }
 
         // GET: Task/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var task = await _context.Task
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var task = await _context.Task.FindAsync(id);
             if (task == null)
             {
                 return NotFound();
             }
-
+            LoadInfo();
             return View(task);
         }
 
         // GET: Task/Create
         public IActionResult Create()
         {
+            
             LoadInfo();
             return View();
         }
+
+        public  async Task<IActionResult>  CreateSubtask (int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var MainTask = new List<Models.Task>();
+            var task = await _context.Task.FindAsync(id);
+            MainTask.Add(task);
+            ViewBag.MainTask = new SelectList(MainTask, "Id","Title");
+            ViewBag.MainTasCategory = new SelectList(MainTask, "Category","Category");
+            LoadInfo();
+            return View();
+        }
+
         private void LoadInfo()
         {
             var categories = _context.Category.ToList();
@@ -99,8 +116,6 @@ namespace TaskTracker.Controllers
             ViewBag.ParentTask = new SelectList(parentTask, "Id","Title");
         }
         // POST: Task/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location")]Models.Task task)
@@ -111,7 +126,6 @@ namespace TaskTracker.Controllers
             }
             if (ModelState.IsValid)
             { 
-                _context.Add(task);
                 await _context.SaveChangesAsync();
 
                 if(task.ParentTask != null ){

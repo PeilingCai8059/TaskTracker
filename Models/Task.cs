@@ -6,7 +6,6 @@ public class Task
 {
     public int Id { get; set; }
 
-
     public User? user { get; set; }
 
     [StringLength(40, MinimumLength = 3)]
@@ -14,7 +13,7 @@ public class Task
     public string Title { get; set; }
     public string? Description { get; set; }
     [Display(Name = "Parent Task")]
-    public int? ParentTaskId { get; set; } // Changed to int
+    public int? ParentTaskId { get; set; } 
     public Task? ParentTask { get; set; }
     public ICollection<Task>? subTasks {get;set;}
     

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var isMainTask = Model.ParentTask == null;
 }
 
 <h1>Task Details</h1>
@@ -21,6 +22,12 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ParentTaskId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ParentTask.Title)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.StartDate)
@@ -66,7 +73,14 @@
         </dd>
     </dl>
 </div>
+<br>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if(isMainTask)
+    {
+        <a asp-action="CreateSubtask" asp-route-id="@Model?.Id" ><button class="create-botton"> Add Subtask </button></a>
+    }
+    <a asp-action="Edit" asp-route-id="@Model?.Id" ><button class="create-botton"> Edit </button></a> |
+    <a asp-action="Delete" asp-route-id="@Model?.Id"><button class="create-botton"> Delete </button></a>|
+    <a asp-action="Index" asp-route-id="@Model?.Id"><button class="create-botton"> Back to List </button></a> 
+   
 </div>

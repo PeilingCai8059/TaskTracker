@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var isMainTask = true;
 }
 
 <br>
@@ -22,7 +23,7 @@
                     <option value="">-Status-</option>
             </select>
             <input type="text" name="SearchString" />
-            <input type="submit" value="Search" />
+            <input type="submit" value="Search" class="create-botton"/>
           
         </form>
     </div>
@@ -96,8 +97,8 @@
             @Html.DisplayFor(modelItem => item.Location)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <a asp-action="Edit" asp-route-id="@item.Id"><button class="create-botton"> Edit </button></a> |
+            <a asp-action="Delete" asp-route-id="@item.Id"><button class="create-botton"> Delete </button></a>
         </td>
     </tr>
     
@@ -106,7 +107,7 @@
                 <tr>
             <td>
                 <span class="subTask-Indent">
-                    &#10147;&nbsp; <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => subItem.Title)</a> 
+                    &#10147;&nbsp; <a asp-action="Details" asp-route-id="@subItem.Id">@Html.DisplayFor(modelItem => subItem.Title)</a> 
                 </span>
                
             </td>
@@ -132,8 +133,8 @@
                 @Html.DisplayFor(modelItem => subItem.Location)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@subItem.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@subItem.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@subItem.Id"><button class="create-botton"> Edit </button></a> |
+                <a asp-action="Delete" asp-route-id="@subItem.Id"><button class="create-botton"> Delete </button></a>
             </td>
         </tr>
             }
