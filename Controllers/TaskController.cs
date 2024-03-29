@@ -126,21 +126,18 @@ namespace TaskTracker.Controllers
             }
             if (ModelState.IsValid)
             { 
-                 _context.Add(task);
                 await _context.SaveChangesAsync();
 
                 if(task.ParentTask != null ){
                     task.ParentTask.subTasks ??= new List<Models.Task>(); 
                     task.ParentTask.subTasks.Add(task); 
                     await _context.SaveChangesAsync();
-                
                 }
                 return RedirectToAction(nameof(Index));
             }
 
             return View(task);
         }
-
 
         // GET: Task/Edit/5
         public async Task<IActionResult> Edit(int? id)
