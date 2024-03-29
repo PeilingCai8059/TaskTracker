@@ -126,8 +126,8 @@ namespace TaskTracker.Controllers
             }
             if (ModelState.IsValid)
             { 
+                 _context.Add(task);
                 await _context.SaveChangesAsync();
-
                 if(task.ParentTask != null ){
                     task.ParentTask.subTasks ??= new List<Models.Task>(); 
                     task.ParentTask.subTasks.Add(task); 
