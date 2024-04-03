@@ -54,16 +54,6 @@
                     <option value="">--Select Category--</option>
                 </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
-
-               
-<form asp-action="Create" asp-controller="Category" method="post">
-    <div class="form-group">
-        <label for="name">Category Name</label>
-        <input type="text" class="form-control" id="name" name="categoryName" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Create Category</button>
-</form>
-       
             </div>
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
