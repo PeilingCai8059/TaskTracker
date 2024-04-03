@@ -142,6 +142,7 @@ width: 100%;
 white-space: nowrap;
 line-height: 60px;
 }
+
 /* _content/TaskTracker/Views/Shared/_Navbar.cshtml.rz.scp.css */
 .navbar-toggler[b-8skzsnzgou] {
     appearance: none;
@@ -257,3 +258,4 @@ line-height: 60px;
         overflow-y: auto;
     }
 }
+

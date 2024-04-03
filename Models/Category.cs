@@ -7,7 +7,7 @@ public class Category
     public int categoryId { get; set; }
     
     [Required]
-     [Display(Name = "Category Name")]
+    [Display(Name = "Category Name")]
     public string categoryName{get;set;}
     
 }
