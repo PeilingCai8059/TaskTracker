@@ -3,12 +3,16 @@
 @{
     ViewData["Title"] = "Delete";
 }
+<div class="actionTitle">
+    <h1>Delete Task</h1>
+</div>
+<div class="warning">
+<h3> &#9888; Warning </h3>
+<h5>Are you sure you want to delete this task?</h5>
+<h5>This action cannot be undone</h5>
+</div>
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Task</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -71,8 +75,10 @@
         <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> 
     </form>
-    <br>
-    <div>
-        <a asp-action="Index"><button class="create-botton"> Back to List </button></a>
-    </div>
+<hr>
+
+<br>
+<div>
+    <a asp-action="Index"><button class="btn create-botton"> Back to List </button></a>
+</div>
 </div>

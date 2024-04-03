@@ -68,7 +68,7 @@ color: rgb(14, 82, 192)
   justify-content: right;
 }
 .form-group{
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 .btn-primary{
   margin-top: 1rem;
@@ -76,4 +76,10 @@ color: rgb(14, 82, 192)
 }
 .subTask-Indent{
   padding-left: 1rem;
+}
+.actionTitle{
+  margin: 2rem 0rem 2rem;
+}
+.warning{
+  color: rgb(255, 0, 0);
 }

@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "Create";
 }
+<div class="actionTitle">
+   <h1>Create a New Task</h1> 
+</div>
 
-<h1>Create a New Task</h1>
 
 
 <hr />
@@ -26,7 +28,7 @@
             <div class="form-group">
                 <label asp-for="ParentTaskId" class="control-label"></label>
                 <select asp-for="ParentTaskId" class="form-control" asp-items="ViewBag.ParentTask">
-                    <option value="">--Select Category--</option>
+                    <option value="">--Select Main Task--</option>
                 </select>
                 <span asp-validation-for="ParentTaskId" class="text-danger"></span>
             </div>
@@ -52,6 +54,16 @@
                     <option value="">--Select Category--</option>
                 </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
+
+               
+<form asp-action="Create" asp-controller="Category" method="post">
+    <div class="form-group">
+        <label for="name">Category Name</label>
+        <input type="text" class="form-control" id="name" name="categoryName" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Category</button>
+</form>
+       
             </div>
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
@@ -78,11 +90,12 @@
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+<hr />
+<div class="actionTitle">
+     <a asp-action="Index"><button class="btn create-botton"> Back to List </button></a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
