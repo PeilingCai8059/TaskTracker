@@ -54,6 +54,10 @@
                     <option value="">--Select Category--</option>
                 </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">
+                    + Category
+                </button>
+
             </div>
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
@@ -85,7 +89,68 @@
      <a asp-action="Index"><button class="btn create-botton"> Back to List </button></a>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalLabel">Create New Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="newCategoryForm" asp-action="Create" asp-controller="Category">
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="categoryName" class="col-form-label">Category Name:</label>
+                <input type="text" class="form-control" id="categoryName" name="categoryName">
+            </div>
+            <!-- Include other fields if necessary -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save Category"/>
+        </div>
+      </form>
+      <div id="formMessageContainer"></div>
+
+    </div>
+  </div>
+</div>
+
+
 @section Scripts {
+    <script>
+    $(document).ready(function() {
+        $('#newCategoryForm').submit(function(event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser
+            var formData = $(this).serialize(); // Serialize the form data
+
+            $.ajax({
+                type: 'POST',
+                url: '/Category/Create',
+                data: formData,
+                success: function(response) {
+                    // Handle success
+                $('#Category').find('option:not(:first)').remove();
+
+        // Repopulate the dropdown with updated categories
+        response.categories.forEach(function(category) {
+            $('#Category').append($('<option>', {
+                value: category.categoryName,
+                text: category.categoryName
+            }));
+             });
+            $('#categoryModal').modal('hide');
+            $('#formMessageContainer').html('<div class="alert alert-success" role="alert">Category successfully added.</div>');
+                },
+                error: function(response) {
+                    // Handle error
+                    alert("There was an error. Please try again.");
+                }
+            });
+        });
+    });
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
