@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<AppUser> signInManager
+
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -13,7 +16,7 @@
         </nav>
     </div>
 
-
+@if (signInManager.IsSignedIn(User)){
     <div class="nav-item px-3">
         <nav class="nav-link" >
             <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> 
@@ -27,4 +30,6 @@
             <a asp-area="" asp-controller="Category" asp-action="Index"><span class="navbar-link"> Manage Category</span></a>
         </nav>
     </div>
+}
+
 </div>

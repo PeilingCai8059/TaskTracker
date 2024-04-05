@@ -6,7 +6,9 @@ public class Task
 {
     public int Id { get; set; }
 
-    public User? user { get; set; }
+    public string? UserId { get; set; } 
+
+    public AppUser? User { get; set; } 
 
     [StringLength(40, MinimumLength = 3)]
     [Required]

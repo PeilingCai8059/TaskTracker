@@ -5,8 +5,8 @@
 }
 
 <br>
-
 <div  class="toolBar" >
+    
     <div>
         <a asp-action="Create"><button class="create-botton"> + New Task</button></a>
     </div>
@@ -26,6 +26,7 @@
           
         </form>
     </div>
+    <br>
 <div  class="viewBar" >
     <div>
         <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> List View</button></a>
@@ -34,102 +35,141 @@
         <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> Calender View</button></a>
     </div>
 </div>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].Title)
-            </th>
-            <th>
+            </span>
+        </th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tasks![0].StartDate)
-            </th>
-            <th>
+            </span>
+        </th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].DueDate)
-            </th>
-            <th>
+            </span>
+        </th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].Category)
-            </th>
-            <th>
+            </span>
+        </th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].Priority)
-            </th>
-            <th>
+            </span>
+        </th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].Status)
-            </th>
-            <th>
+            </span>
+        </th>
+        <th>
+            <span class="listItem">
                 @Html.DisplayNameFor(model => model.Tasks![0].Location)
-            </th>
-            <th></th>
+            </span>
+        </th>
+        <th>
+        </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Tasks) {
-    @if(item.ParentTask != null )
+    @if(item.ParentTask != null && !Model.DoSearchAndFilter ) //if task is parent task and in search mode
     {
         continue;
     }
-    <tr>
+    <span  class="list-line">
+    <tr >
+      
         <td>
-            <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a> 
+            <span class="subTask-Indent " >
+                  <a asp-action="Details" asp-route-id="@item.Id" class="item-title">@Html.DisplayFor(modelItem => item.Title)</a> 
+            </span>
         </td>
-        <td class="item-description">
-            @Html.DisplayFor(modelItem => item.Description)
+        <td >
+            <span class="listItem">
+               @Html.DisplayFor(modelItem => item.Description) 
+            </span>
+           
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
+            <span class="listItem">
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </span>
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DueDate)
+        <td >
+            <span class="listItem">
+                @Html.DisplayFor(modelItem => item.Category)
+            </span>
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
+        <td >
+            <span class="priority @($"{item.Priority?.ToLower() ?? string.Empty}")">
+                @Html.DisplayFor(modelItem => item.Priority)
+            </span>
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Priority)
+        <td >
+            <span class="status @($"{item.Status?.ToLower() ?? string.Empty}")">
+                @Html.DisplayFor(modelItem => item.Status)
+            </span>
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
+            <span class="listItem">
+                @Html.DisplayFor(modelItem => item.Location)
+            </span>
         </td>
         <td>
             <a asp-action="Edit" asp-route-id="@item.Id"><button class="create-botton"> Edit </button></a> |
             <a asp-action="Delete" asp-route-id="@item.Id"><button class="create-botton"> Delete </button></a>
         </td>
+        
     </tr>
-    
-        @if(item.subTasks != null) {
+    </span>
+        @if(item.subTasks != null && !Model.DoSearchAndFilter) {
             @foreach(var subItem in item.subTasks){
                 <tr>
             <td>
-                <span class="subTask-Indent">
-                    &#10147;&nbsp; <a asp-action="Details" asp-route-id="@subItem.Id">@Html.DisplayFor(modelItem => subItem.Title)</a> 
+                <span class="subTask-Indent  ">
+                    &#10147;&nbsp; <a asp-action="Details" asp-route-id="@subItem.Id" class="item-title" >@Html.DisplayFor(modelItem => subItem.Title)</a> 
                 </span>
                
             </td>
-            <td class="item-description">
-                @Html.DisplayFor(modelItem => subItem.Description)
+            <td >
+                <span class="listItem">
+                    @Html.DisplayFor(modelItem => subItem.Description)
+                </span>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => subItem.StartDate)
+                <span class="listItem">
+                    @Html.DisplayFor(modelItem => subItem.DueDate)
+                </span>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => subItem.DueDate)
+                <span class="listItem">
+                    @Html.DisplayFor(modelItem => subItem.Category)
+                </span>
+            </td>
+            <td >
+                <span class="priority @($"{subItem.Priority?.ToLower() ?? string.Empty}")">
+                    @Html.DisplayFor(modelItem => subItem.Priority)
+                </span>
+            </td>
+            <td >
+                <span class="status @($"{subItem.Status?.ToLower() ?? string.Empty}")">
+                    @Html.DisplayFor(modelItem => subItem.Status)
+                </span>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => subItem.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => subItem.Priority)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => subItem.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => subItem.Location)
+                <span class="listItem">
+                    @Html.DisplayFor(modelItem => subItem.Location)
+                </span>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@subItem.Id"><button class="create-botton"> Edit </button></a> |

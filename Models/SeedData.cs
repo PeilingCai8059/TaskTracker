@@ -29,7 +29,7 @@ namespace TaskTracker.Models
                     new Status { statusName = "Pending" },
                     new Status { statusName = "In-Progress" },
                     new Status { statusName = "Complete" },
-                    new Status { statusName = "On Hold" }, 
+                    new Status { statusName = "On-Hold" }, 
                     new Status { statusName = "Cancelled" }, 
                     new Status { statusName = "Deferred" } 
                 );
@@ -60,7 +60,7 @@ namespace TaskTracker.Models
                 context.Task.AddRange(
                     new TaskTracker.Models.Task
                     {
-                        user = context.User.FirstOrDefault(u => u.firstName == "John" && u.lastName == "Doe"),
+                        
                         Title = "Finish Project Proposal",
                         Description = "Draft and finalize the project proposal for upcoming meeting.",
                         StartDate = DateTime.Parse("2024-03-26"),
@@ -72,7 +72,7 @@ namespace TaskTracker.Models
                     },
                     new TaskTracker.Models.Task
                     {
-                        user = context.User.FirstOrDefault(u => u.firstName == "John" && u.lastName == "Doe"),
+                        
                         Title = "Grocery Shopping",
                         Description = "Buy groceries for the week.",
                         StartDate = DateTime.Parse("2024-03-27"),
@@ -84,7 +84,7 @@ namespace TaskTracker.Models
                     },
                     new TaskTracker.Models.Task
                     {
-                        user = context.User.FirstOrDefault(u => u.firstName == "John" && u.lastName == "Doe"),
+                       
                         Title = "Finish Report",
                         Description = "Complete the quarterly report for the finance department.",
                         StartDate = DateTime.Parse("2024-03-26"),
@@ -96,7 +96,7 @@ namespace TaskTracker.Models
                     },
                     new TaskTracker.Models.Task
                     {
-                        user = context.User.FirstOrDefault(u => u.firstName == "John" && u.lastName == "Doe"),
+                      
                         Title = "Gym Workout",
                         Description = "Go to the gym for a workout session.",
                         StartDate = DateTime.Parse("2024-03-28"),

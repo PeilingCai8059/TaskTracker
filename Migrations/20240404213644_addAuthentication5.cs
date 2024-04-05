@@ -5,7 +5,7 @@
 namespace TaskTracker.Migrations
 {
     /// <inheritdoc />
-    public partial class modifyDateFormat : Migration
+    public partial class addAuthentication5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

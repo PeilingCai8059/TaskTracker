@@ -20,6 +20,7 @@ html {
 a{
   text-decoration: none;
   color: rgb(14, 75, 173);
+  font:bold;
 }
 .create-botton{
     background-color: white;
@@ -38,7 +39,6 @@ a{
   border-radius: 10px; 
   padding: 3fx;
   margin-left: 1rem;
-  
 }
 .dropDownList:hover{
 background-color: rgba(255, 255, 255, 0.341);
@@ -52,6 +52,7 @@ color: rgb(14, 82, 192)
   border: none;
   padding: 0 1em 0 0;
   margin: 0;
+  
 }
 .filter:hover{
 background-color: rgba(255, 255, 255, 0.341);
@@ -89,4 +90,68 @@ color: rgb(14, 82, 192)
 }
 .nav-scrollable .nav-item .nav-link .navbar-link {
   font-size: 16px; /* Example of increasing specificity */
+}
+.loginContainer{
+  padding: 8rem;
+}
+.link-login {
+  color: #326eaa;
+}
+.status, .priority  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  color: white;
+  text-align: center;
+  min-height: 20px;
+}
+.priority {
+  width: 60px; 
+}
+.status {
+  width: 90px; 
+}
+
+.low { background-color: #6DA9E4; }
+.medium { background-color: #AACB73; }
+.high { background-color: #FF6F5E; }
+.urgent { background-color: #FF2171; }
+
+.pending { background-color: #86C8BC; }
+.in-progress { background-color: #2196F3; }
+.complete { background-color: #4CAF50; }
+.on-hold { background-color: #FF8C8C; }
+.cancelled { background-color: #D9534F; }
+.deferred { background-color: #F7A76C; }
+
+.listItem{
+   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-title{
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+  font-size: 1.5rem;
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 1px; 
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  white-space: nowrap;
+}
+
+
+.item-title:hover {
+  text-decoration: none;
+  background-color: #2196F3;
+  color: white;
+ 
+}
+.task-detail{
+  height: 3rem;
+ 
 }

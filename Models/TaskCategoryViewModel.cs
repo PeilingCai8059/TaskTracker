@@ -9,10 +9,12 @@ public class TaskCategoryViewModel
     public SelectList? Categories { get; set; }
     public SelectList? Priorities { get; set; }
     public SelectList? Status { get; set; }
+    
     public string? TaskPriority { get; set; }
     public string? TaskStatus { get; set; }
 
     public string? TaskCategory { get; set; }
 
     public string? SearchString { get; set; }
+    public bool DoSearchAndFilter { get; set; }
 }
