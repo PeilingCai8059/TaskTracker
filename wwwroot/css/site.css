@@ -127,7 +127,7 @@ color: rgb(14, 82, 192)
 .deferred { background-color: #F7A76C; }
 
 .listItem{
-   display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -154,4 +154,31 @@ color: rgb(14, 82, 192)
 .task-detail{
   height: 3rem;
  
+}
+.list-chart-container {
+  display: flex;
+  flex-wrap: nowrap;  
+  align-items: flex-start;
+}
+
+.list-chart-container .table {
+  flex: 1;  
+  min-width: 0; 
+}
+
+.list-chart-container .chartbox {
+  flex: 2;  
+  width: 100%; 
+  max-width: 100%; 
+  overflow-x: auto; 
+  height:fit-content;
+  width: fit-content;
+  min-height: 30rem;
+  
+}
+
+.chart_div {
+  margin-top: 2fx;;
+  width: 100%; 
+  min-width: 1200px; 
 }

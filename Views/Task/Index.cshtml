@@ -32,7 +32,7 @@
         <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> List View</button></a>
     </div>
     <div>
-        <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> Calender View</button></a>
+        <a asp-area="" asp-controller="Task" asp-action="GanttChart"><button class="create-botton"> Calender View</button></a>
     </div>
 </div>
 
@@ -79,26 +79,23 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Tasks) {
-    @if(item.ParentTask != null && !Model.DoSearchAndFilter ) //if task is parent task and in search mode
-    {
-        continue;
-    }
+    @foreach (var item in Model.Tasks) {
     <span  class="list-line">
     <tr >
-      
         <td>
-            <span class="subTask-Indent " >
-                  <a asp-action="Details" asp-route-id="@item.Id" class="item-title">@Html.DisplayFor(modelItem => item.Title)</a> 
-            </span>
+        @if(item.ParentTask != null )
+        {
+        <span>&nbsp;&nbsp;&#10147; </span>
+        }
+        <span class="subTask-Indent " >
+        <a asp-action="Details" asp-route-id="@item.Id" class="item-title">@Html.DisplayFor(modelItem => item.Title)</a> 
+        </span>
         </td>
         <td >
-            <span class="listItem">
+            <span class="listItem" >
                @Html.DisplayFor(modelItem => item.Description) 
             </span>
-           
         </td>
-
         <td>
             <span class="listItem">
                 @Html.DisplayFor(modelItem => item.DueDate)
@@ -132,52 +129,6 @@
         
     </tr>
     </span>
-        @if(item.subTasks != null && !Model.DoSearchAndFilter) {
-            @foreach(var subItem in item.subTasks){
-                <tr>
-            <td>
-                <span class="subTask-Indent  ">
-                    &#10147;&nbsp; <a asp-action="Details" asp-route-id="@subItem.Id" class="item-title" >@Html.DisplayFor(modelItem => subItem.Title)</a> 
-                </span>
-               
-            </td>
-            <td >
-                <span class="listItem">
-                    @Html.DisplayFor(modelItem => subItem.Description)
-                </span>
-            </td>
-            <td>
-                <span class="listItem">
-                    @Html.DisplayFor(modelItem => subItem.DueDate)
-                </span>
-            </td>
-            <td>
-                <span class="listItem">
-                    @Html.DisplayFor(modelItem => subItem.Category)
-                </span>
-            </td>
-            <td >
-                <span class="priority @($"{subItem.Priority?.ToLower() ?? string.Empty}")">
-                    @Html.DisplayFor(modelItem => subItem.Priority)
-                </span>
-            </td>
-            <td >
-                <span class="status @($"{subItem.Status?.ToLower() ?? string.Empty}")">
-                    @Html.DisplayFor(modelItem => subItem.Status)
-                </span>
-            </td>
-            <td>
-                <span class="listItem">
-                    @Html.DisplayFor(modelItem => subItem.Location)
-                </span>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@subItem.Id"><button class="create-botton"> Edit </button></a> |
-                <a asp-action="Delete" asp-route-id="@subItem.Id"><button class="create-botton"> Delete </button></a>
-            </td>
-        </tr>
-            }
-        }
-}
+    }
     </tbody>
 </table>

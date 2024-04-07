@@ -16,5 +16,5 @@ public class TaskCategoryViewModel
     public string? TaskCategory { get; set; }
 
     public string? SearchString { get; set; }
-    public bool DoSearchAndFilter { get; set; }
+    
 }

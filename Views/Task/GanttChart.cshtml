@@ -1,0 +1,174 @@
+@model TaskTracker.Models.TaskCategoryViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<br>
+<div  class="toolBar" >
+    <div>
+        <a asp-action="Create"><button class="create-botton"> + New Task</button></a>
+    </div>
+        <form asp-controller="Task" asp-action="GanttChart" method="get">
+            
+            <select asp-for="TaskCategory" asp-items="Model.Categories" class="dropDownList" >
+                    <option value="">-Category-</option>
+            </select>
+             <select asp-for="TaskPriority" asp-items="Model.Priorities" class="dropDownList" >
+                    <option value="">-Priority-</option>
+            </select>
+            <select asp-for="TaskStatus" asp-items="Model.Status" class="dropDownList" >
+                    <option value="">-Status-</option>
+            </select>
+            <input type="text" name="SearchString" />
+            <input type="submit" value="Search" class="create-botton"/>
+          
+        </form>
+    </div>
+    <br>
+<div  class="viewBar" >
+    <div>
+        <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> List View</button></a>
+    </div>
+    <div>
+        <a asp-area="" asp-controller="Task" asp-action="GanttChart"><button class="create-botton"> Calender View</button></a>
+    </div>
+</div>
+<div class="list-chart-container">
+    <table class="table">
+        <thead>
+            <tr>
+            <th>
+                <span class="listItem">
+                    @Html.DisplayNameFor(model => model.Tasks![0].Title)
+                </span>
+            </th>
+            <th>
+                <span class="listItem">
+                    @Html.DisplayNameFor(model => model.Tasks![0].DueDate)
+                </span>
+            </th>
+            <th>
+                <span class="listItem">
+                    @Html.DisplayNameFor(model => model.Tasks![0].Priority)
+                </span>
+            </th>
+            <th>
+                <span class="listItem">
+                    @Html.DisplayNameFor(model => model.Tasks![0].Status)
+                </span>
+            </th>
+            <th>
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model.Tasks) {
+    <span  class="list-line">
+    <tr >
+        <td>
+        @if(item.ParentTask != null )
+        {
+        <span>&nbsp;&nbsp;&#10147; </span>
+        }
+        <span class="subTask-Indent " >
+        <a asp-action="Details" asp-route-id="@item.Id" class="item-title">@Html.DisplayFor(modelItem => item.Title)</a> 
+        </span>
+        </td>
+        <td>
+            <span class="listItem">
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </span>
+        </td>
+        <td >
+            <span class="priority @($"{item.Priority?.ToLower() ?? string.Empty}")">
+                @Html.DisplayFor(modelItem => item.Priority)
+            </span>
+        </td>
+        <td >
+            <span class="status @($"{item.Status?.ToLower() ?? string.Empty}")">
+                @Html.DisplayFor(modelItem => item.Status)
+            </span>
+        </td>       
+    </tr>
+    </span>
+    }
+    </tbody>
+    </table>
+    <div class="chartbox">
+        <br><br>
+        <div id="chart_div" class="chart_div"></div>
+        
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['gantt']});
+            google.charts.setOnLoadCallback(drawChart );
+
+            function drawChart(){ 
+                var tasksData = @Html.Raw(Json.Serialize(Model.Tasks.Select(task => new {
+                    TaskId = task.Id,
+                    Title = task.Title,
+                    
+                    StartDate = task.StartDate.ToString("yyyy-MM-dd"), // Ensuring date format is JavaScript-friendly
+                    DueDate = task.DueDate.ToString("yyyy-MM-dd"),
+                    Priority = task.Priority,
+                    Status = task.Status,
+                    Parent = task.ParentTaskId
+                })));
+             
+
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Task ID');
+                data.addColumn('string', 'Task Name');
+                data.addColumn('string', 'Resource');
+                data.addColumn('date', 'Start Date');
+                data.addColumn('date', 'End Date');
+                data.addColumn('number', 'Duration');
+                data.addColumn({label: 'Elapsed Time', purpose:"Elapsed Time", type: 'number'});
+                data.addColumn('string', 'Dependencies');
+                
+                var rows = [];
+                var today = new Date();
+                for (var i = 0; i < tasksData.length; i++) {
+                    var task = tasksData[i];
+                
+                    var id = task.taskId.toString();
+                    var startDateParts = task.startDate.split('-');
+                    var dueDateParts = task.dueDate.split('-');
+                    var startDate = new Date(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
+                    var dueDate = new Date(dueDateParts[0], dueDateParts[1] - 1, dueDateParts[2]);
+                    var duration = (dueDate - startDate) / (1000 * 60 * 60 * 24);
+                    var dependency = task.parent == null ? null : task.parent.toString();
+                    var totalDuration = dueDate - startDate;
+                    var elapsed = today - startDate;
+                    var percentComplete = Math.round((elapsed / totalDuration) * 100);
+                    percentComplete = Math.min(percentComplete, 100);
+                    percentComplete = Math.max(percentComplete, 0);
+
+                    rows.push([
+                        id,
+                        " ",
+                        parent,
+                        startDate,
+                        dueDate,
+                        duration,  
+                        percentComplete,     
+                        null
+                    ]);
+                }
+                data.addRows(rows);
+                var options = {
+                    height: tasksData.length * 65,
+                    gantt: {
+                    trackHeight: 46.6,
+                    sortTasks:false,
+                    defaultStartDate: new Date(2023, 1, 1)
+                    }
+                };
+                var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
+    </div>  
+</div>
+
+  
