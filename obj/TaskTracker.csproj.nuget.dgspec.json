@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/peiling/Desktop/5394 Project/TaskTracker/TaskTracker.csproj": {}
+    "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/TaskTracker.csproj": {}
   },
   "projects": {
-    "/Users/peiling/Desktop/5394 Project/TaskTracker/TaskTracker.csproj": {
+    "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/TaskTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/peiling/Desktop/5394 Project/TaskTracker/TaskTracker.csproj",
+        "projectUniqueName": "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/TaskTracker.csproj",
         "projectName": "TaskTracker",
-        "projectPath": "/Users/peiling/Desktop/5394 Project/TaskTracker/TaskTracker.csproj",
+        "projectPath": "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/TaskTracker.csproj",
         "packagesPath": "/Users/peiling/.nuget/packages/",
-        "outputPath": "/Users/peiling/Desktop/5394 Project/TaskTracker/obj/",
+        "outputPath": "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/peiling/.nuget/NuGet/NuGet.Config"
