@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,26 @@ namespace TaskTracker.Controllers
     public class CategoryController : Controller
     {
         private readonly TaskTrackerContext _context;
+         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public CategoryController(TaskTrackerContext context)
+        public CategoryController(TaskTrackerContext context,SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, ILogger<AccountController> logger)
         {
             _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _logger =logger ;
         }
 
         // GET: Category
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            var currentUser = await _userManager.GetUserAsync(User);
+            var categories = from t in _context.Category
+                        where t.UserId == currentUser.Id
+                        select t ;
+            return View(await categories.ToListAsync());
         }
 
         // GET: Category/Details/5
@@ -54,22 +65,30 @@ namespace TaskTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("categoryId,categoryName")] Category category)
+        public async Task<IActionResult> Create([Bind("categoryId,categoryName,UserId")] Category category, bool returnJson = false)
         {
-
+            var currentUser = await _userManager.GetUserAsync(User);
             if (ModelState.IsValid)
             {
-                Console.WriteLine(category.categoryName);
+                category.UserId = currentUser.Id;
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 var categories = await _context.Category
-                        .OrderBy(c => c.categoryName) // Assuming you want them ordered
+                        .Where(c => c.UserId == currentUser.Id)
+                        .OrderBy(c => c.categoryName) 
                         .Select(c => new { c.categoryId, c.categoryName })
                         .ToListAsync();
 
-                return Json(new { success = true, categories = categories });
+                if (returnJson)
+                {
+                     return Json(new { success = true, categories = categories });
+                }
+                else
+                {
+                     return RedirectToAction("Index");
+                }
             }
-            return View(category);
+            return View("Error");
         }
 
         // GET: Category/Edit/5
@@ -89,12 +108,11 @@ namespace TaskTracker.Controllers
         }
 
         // POST: Category/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("categoryId,categoryName")] Category category)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
             if (id != category.categoryId)
             {
                 return NotFound();
@@ -104,6 +122,7 @@ namespace TaskTracker.Controllers
             {
                 try
                 {
+                    category.UserId = currentUser.Id;
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }

@@ -1,11 +1,12 @@
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<AppUser> signInManager
+@inject UserManager<AppUser> userManager
 
 
     @if (signInManager.IsSignedIn(User))
     {
         <a class="nav-item " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Hello! @User.Identity!.Name
+            Hello! @userManager.GetUserAsync(User).Result!.LastName, @userManager.GetUserAsync(User).Result!.FirstName 
         </a>
         <a class="nav-item "  asp-action="Logout" asp-controller="Account">
             Logout

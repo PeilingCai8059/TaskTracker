@@ -2,10 +2,12 @@ using TaskTracker.Models;
 using TaskTracker.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TaskTracker.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TaskTracker.Controllers;
 
-public class AccountController(ILogger<AccountController> logger,SignInManager<AppUser> signInManager, UserManager<AppUser> userManager) : Controller
+public class AccountController(TaskTrackerContext context,SignInManager<AppUser> signInManager, UserManager<AppUser> userManager) : Controller
 {
     
     public IActionResult Login(string? returnUrl = null)
@@ -17,7 +19,6 @@ public class AccountController(ILogger<AccountController> logger,SignInManager<A
     [HttpPost]
     public async Task<IActionResult> Login(LoginVM model, string? returnUrl = null)
     {
-        
         ViewData["ReturnUrl"] = returnUrl;
         if (ModelState.IsValid)
         {
@@ -61,6 +62,15 @@ public class AccountController(ILogger<AccountController> logger,SignInManager<A
             var result = await userManager.CreateAsync(user, model.Password!);
             if (result.Succeeded)
             {
+                var currentUser = await userManager.GetUserAsync(User);
+                context.Category.AddRange(
+                    new Category { categoryName = "Work" , UserId = currentUser.Id },
+                    new Category { categoryName = "Personal", UserId = currentUser.Id },
+                    new Category { categoryName = "Health", UserId = currentUser.Id }, 
+                    new Category { categoryName = "Education" , UserId = currentUser.Id}, 
+                    new Category { categoryName = "Finance" , UserId = currentUser.Id}, 
+                    new Category { categoryName = "Home", UserId = currentUser.Id } 
+                );
                 await signInManager.SignInAsync(user, false);
 
                 return RedirectToLocal(returnUrl);

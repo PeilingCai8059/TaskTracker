@@ -132,11 +132,12 @@
                     var task = tasksData[i];
                 
                     var id = task.taskId.toString();
+                    var priority = task.Priority;
                     var startDateParts = task.startDate.split('-');
                     var dueDateParts = task.dueDate.split('-');
                     var startDate = new Date(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
                     var dueDate = new Date(dueDateParts[0], dueDateParts[1] - 1, dueDateParts[2]);
-                    var duration = (dueDate - startDate) / (1000 * 60 * 60 * 24);
+                    var duration = (dueDate - startDate) * (1000 * 60 * 60 * 24);
                     var dependency = task.parent == null ? null : task.parent.toString();
                     var totalDuration = dueDate - startDate;
                     var elapsed = today - startDate;
@@ -161,7 +162,12 @@
                     gantt: {
                     trackHeight: 46.6,
                     sortTasks:false,
-                    defaultStartDate: new Date(2023, 1, 1)
+                    defaultStartDate: new Date(2023, 1, 1),
+                    criticalPathEnabled: false, // Critical path arrows will be the same as other arrows.
+                    arrow: {
+                        width: 1,
+                        color: 'grey',
+                    }
                     }
                 };
                 var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
