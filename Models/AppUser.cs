@@ -16,4 +16,6 @@ public class AppUser : IdentityUser
     [Required]
     [Display(Name = "Last Name")]
     public string? LastName { get; set; }
+
+    
 }

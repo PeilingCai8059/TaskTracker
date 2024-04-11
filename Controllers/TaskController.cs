@@ -33,6 +33,7 @@ namespace TaskTracker.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
            
             IQueryable<string> categoryQuery = from m in _context.Category
+                                    where m.UserId == currentUser.Id
                                     orderby m.categoryName
                                     select m.categoryName;
             IQueryable<string> priorityQuery = from m in _context.Priority
@@ -112,6 +113,7 @@ namespace TaskTracker.Controllers
             var currentUser = await _userManager.GetUserAsync(User);
            
             IQueryable<string> categoryQuery = from m in _context.Category
+                                    where m.UserId == currentUser.Id
                                     orderby m.categoryName
                                     select m.categoryName;
             IQueryable<string> priorityQuery = from m in _context.Priority
@@ -226,7 +228,7 @@ namespace TaskTracker.Controllers
         private async void LoadInfoAsync()
         {
             var currentUser = await  _userManager.GetUserAsync(User);
-            var categories = _context.Category.ToList();
+            var categories = _context.Category.Where(t => t.UserId == currentUser.Id).ToList();
             var priorities = _context.Priority.ToList();
             var status = _context.Status.ToList();
             var parentTask  = _context.Task.Where(t => t.UserId == currentUser.Id && t.ParentTask == null ).ToList();

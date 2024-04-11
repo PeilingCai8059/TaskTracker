@@ -123,31 +123,30 @@
     <script>
     $(document).ready(function() {
         $('#newCategoryForm').submit(function(event) {
-            event.preventDefault(); // Prevent the form from submitting via the browser
-            var formData = $(this).serialize(); // Serialize the form data
-
+            event.preventDefault(); 
+            var formData = $(this).serialize(); 
+            formData += '&returnJson=true';
             $.ajax({
                 type: 'POST',
                 url: '/Category/Create',
                 data: formData,
                 success: function(response) {
-                    // Handle success
                 $('#Category').find('option:not(:first)').remove();
 
-        // Repopulate the dropdown with updated categories
-        response.categories.forEach(function(category) {
-            $('#Category').append($('<option>', {
-                value: category.categoryName,
-                text: category.categoryName
-            }));
-             });
-            $('#categoryModal').modal('hide');
-            $('#formMessageContainer').html('<div class="alert alert-success" role="alert">Category successfully added.</div>');
-                },
-                error: function(response) {
-                    // Handle error
-                    alert("There was an error. Please try again.");
-                }
+             // Repopulate the dropdown with updated categories
+            response.categories.forEach(function(category) {
+                $('#Category').append($('<option>', {
+                    value: category.categoryName,
+                    text: category.categoryName
+                    }));
+                });
+                $('#categoryModal').modal('hide');
+                $('#formMessageContainer').html('<div class="alert alert-success" role="alert">Category successfully added.</div>');
+                    },
+                    error: function(response) {
+                        // Handle error
+                        alert("There was an error. Please try again.");
+                    }
             });
         });
     });
