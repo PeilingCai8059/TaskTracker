@@ -47,7 +47,7 @@ public class AccountController(TaskTrackerContext context,SignInManager<AppUser>
 
     [HttpPost]
     public async Task<IActionResult> Register(RegisterVM model, string? returnUrl = null)
-    {
+        {
         ViewData["ReturnUrl"] = returnUrl;
         if (ModelState.IsValid)
         {
@@ -62,15 +62,15 @@ public class AccountController(TaskTrackerContext context,SignInManager<AppUser>
             var result = await userManager.CreateAsync(user, model.Password!);
             if (result.Succeeded)
             {
-                var currentUser = await userManager.GetUserAsync(User);
                 context.Category.AddRange(
-                    new Category { categoryName = "Work" , UserId = currentUser.Id },
-                    new Category { categoryName = "Personal", UserId = currentUser.Id },
-                    new Category { categoryName = "Health", UserId = currentUser.Id }, 
-                    new Category { categoryName = "Education" , UserId = currentUser.Id}, 
-                    new Category { categoryName = "Finance" , UserId = currentUser.Id}, 
-                    new Category { categoryName = "Home", UserId = currentUser.Id } 
+                    new Category { categoryName = "Work", UserId = user.Id },
+                    new Category { categoryName = "Personal", UserId = user.Id },
+                    new Category { categoryName = "Health", UserId = user.Id }, 
+                    new Category { categoryName = "Education", UserId = user.Id }, 
+                    new Category { categoryName = "Finance", UserId = user.Id }, 
+                    new Category { categoryName = "Home", UserId = user.Id } 
                 );
+                 await context.SaveChangesAsync();
                 await signInManager.SignInAsync(user, false);
 
                 return RedirectToLocal(returnUrl);

@@ -8572,11 +8572,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/TaskTracker.csproj",
+      "projectUniqueName": "/Users/peiling/Desktop/2024 Spring/TaskTracker/TaskTracker.csproj",
       "projectName": "TaskTracker",
-      "projectPath": "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/TaskTracker.csproj",
+      "projectPath": "/Users/peiling/Desktop/2024 Spring/TaskTracker/TaskTracker.csproj",
       "packagesPath": "/Users/peiling/.nuget/packages/",
-      "outputPath": "/Users/peiling/Desktop/2024 Spring/Project/TaskTracker/obj/",
+      "outputPath": "/Users/peiling/Desktop/2024 Spring/TaskTracker/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/peiling/.nuget/NuGet/NuGet.Config"

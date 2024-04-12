@@ -10,6 +10,7 @@
     <div>
         <a asp-action="Create"><button class="create-botton"> + New Task</button></a>
     </div>
+    
         <form asp-controller="Task" asp-action="Index" method="get">
             
             <select asp-for="TaskCategory" asp-items="Model.Categories" class="dropDownList" >
@@ -25,14 +26,17 @@
             <input type="submit" value="Search" class="create-botton"/>
           
         </form>
-    </div>
+</div>
     <br>
 <div  class="viewBar" >
     <div>
         <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> List View</button></a>
     </div>
     <div>
-        <a asp-area="" asp-controller="Task" asp-action="GanttChart"><button class="create-botton"> Calender View</button></a>
+        <a asp-area="" asp-controller="Task" asp-action="GanttChart"><button class="create-botton"> Gantt Chart</button></a>
+    </div>
+        <div>
+        <a asp-area="" asp-controller="Task" asp-action="Calendar"><button class="create-botton"> Calender View</button></a>
     </div>
 </div>
 

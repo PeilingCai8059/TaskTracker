@@ -1,0 +1,297 @@
+@model TaskTracker.Models.TaskCategoryViewModel
+
+@{
+    ViewData["Title"] = "Calendar View";
+}
+<div  class="toolBar" >
+    
+    <div>
+        <a asp-action="Create"><button class="create-botton"> + New Task</button></a>
+    </div>
+    
+        <form asp-controller="Task" asp-action="Calendar" method="get">
+            
+            <select asp-for="TaskCategory" asp-items="Model.Categories" class="dropDownList" >
+                    <option value="">-Category-</option>
+            </select>
+             <select asp-for="TaskPriority" asp-items="Model.Priorities" class="dropDownList" >
+                    <option value="">-Priority-</option>
+            </select>
+            <select asp-for="TaskStatus" asp-items="Model.Status" class="dropDownList" >
+                    <option value="">-Status-</option>
+            </select>
+            <input type="text" name="SearchString" />
+            <input type="submit" value="Search" class="create-botton"/>
+          
+        </form>
+</div>
+    <br>
+<div  class="viewBar" >
+    <div>
+        <a asp-area="" asp-controller="Task" asp-action="Index"><button class="create-botton"> List View</button></a>
+    </div>
+    <div>
+        <a asp-area="" asp-controller="Task" asp-action="GanttChart"><button class="create-botton"> Gantt Chart</button></a>
+    </div>
+        <div>
+        <a asp-area="" asp-controller="Task" asp-action="Calendar"><button class="create-botton"> Calender View</button></a>
+    </div>
+</div>
+<script src="~/lib/daypilot/daypilot-all.min.js" asp-append-version="true"></script>
+
+<div class="main" style="display: flex;">
+    <div style="">
+        <div id="nav"></div>
+    </div>
+    <div style="flex-grow: 1; margin-left: 10px;">
+        <div class="navi">
+            <button id="previous">
+                    <<
+            </button>
+            <button id="today" class="highlighted">Today</button>
+            <button id="next">
+                    >>
+            </button>
+        </div>
+        <div id="dp"></div>
+    </div>
+</div>
+
+<div id="taskForm" style="display:none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; padding: 20px; z-index: 100;">
+    <form id="newTaskForm">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label for="Title" class="control-label">Task Title:</label>
+            <input id="Title" class="form-control" name="title" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="Description" class="control-label">Task Description:</label>
+            <input id="Description" class="form-control" name="description"/>
+        </div>
+
+        <div class="form-group">
+            <label for="ParentTaskId" class="control-label">Main Task:</label>
+            <select id="ParentTaskId" class="form-control" asp-items="ViewBag.ParentTask" name="parentTaskId">
+                <option value="">--Select Main Task--</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Category" class="control-label">Category:</label>
+            <select id="Category" class="form-control" asp-items="Model.Categories" name="category">
+                <option value="">--Select Category--</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Priority" class="control-label">Priority:</label>
+            <select id="Priority" class="form-control" asp-items="Model.Priorities" name="priority">
+                <option value="">--Select Priority--</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="Status" class="control-label">Status:</label>
+            <select id="Status" class="form-control" asp-items="Model.Status" name="status">
+                <option value="">--Select Status--</option>
+            </select> 
+        </div>
+
+        <div class="form-group">
+            <label for="Location" class="control-label">Location:</label>
+            <input id="Location" class="form-control" name="location"/>
+        </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="button"  class="btn btn-primary" onclick="document.getElementById('taskForm').style.display='none'">Cancel</button>
+            </div>
+    </form>
+</div>
+
+<script>
+    const datePicker = new DayPilot.Navigator("nav", {
+        showMonths: 3,
+        skipMonths: 3,
+        selectMode: "Month",
+        onTimeRangeSelected: args => {
+            calendar.startDate = args.day;
+            calendar.update();
+            
+        }
+    });
+    datePicker.init();
+
+    const calendar = new DayPilot.Month("dp", {
+       
+        onTimeRangeSelected: async args => {
+            document.getElementById('taskForm').style.display = 'block';
+            const form = document.getElementById('newTaskForm');
+
+            form.onsubmit = async (e) => {
+            e.preventDefault(); 
+
+            const title = document.getElementById('Title').value;
+            const description = document.getElementById('Description').value;
+            const mainTaskId = document.getElementById('ParentTaskId').value;
+            const parsedParentTaskId = mainTaskId ? parseInt(mainTaskId) : null;
+            const category = document.getElementById('Category').value;
+            const priority = document.getElementById('Priority').value;
+            const status = document.getElementById('Status').value;
+            const location = document.getElementById('Location').value;
+
+            if (!title) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+            function toDateTimeString(dateString) {
+                const date = new Date(dateString);
+                 return date.toISOString();
+            }
+            const task = {
+                "Title": title,
+                "Description": description,
+                "ParentTaskId": parsedParentTaskId,
+                "Category": category,
+                "Priority": priority,
+                "Status": status,
+                "Location": location,
+                "ReminderTime" : null,
+                "StartDate": toDateTimeString(args.start.value),
+                "DueDate": toDateTimeString(args.end.value)
+            };
+            const params = {
+                id:9999,
+                start: args.start.value,
+                end: args.end.value,
+                text: title,
+                tags : {
+                    category: category,
+                    priority: priority,
+                    status: status,
+                }
+            };
+            params.backColor = (function(priority) {
+                switch(priority) {
+                    case "High": return "#FF6F5E";  // Red for high priority
+                    case "Medium": return "#AACB73";  // Orange for medium priority
+                    case "Low": return "#6DA9E4";  // Green for low priority
+                    default: return "#FF2171";  // Default color
+                }
+            })(params.tags.priority);
+            calendar.events.add(params);
+
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            fetch('http://localhost:5114/Task/CalendarCreate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken 
+                },
+                body: JSON.stringify(task)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('taskForm').style.display = 'none';
+                    form.reset();
+                }
+            })
+            .then(data => {
+                calendar.clearSelection();
+            })
+        };
+        },
+        contextMenu: new DayPilot.Menu({
+            items: [
+                {
+                    text: "Delete",
+                    onClick: async args => {
+                        const e = args.source;
+                        const id = e.id();
+                        if (confirm("Are you sure you want to delete this Task?")) {
+                            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                            fetch(`http://localhost:5114/Task/Delete/${id}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'RequestVerificationToken': csrfToken
+                                },
+                                body: JSON.stringify({ id: id })  
+                            })
+                            .then(data => console.log('Deleted successfully', data))
+                            calendar.events.remove(e);
+                         
+                        }
+                    }
+                },
+            ]
+        })
+    });
+
+    calendar.init();
+    const app = {
+        elements: {
+            previous: document.querySelector("#previous"),
+            today: document.querySelector("#today"),
+            next: document.querySelector("#next"),
+        },
+        async updateColor(e, color) {
+            const params = {
+                color: color
+            };
+            const id = e.id();
+            await DayPilot.Http.put(`/api/events/${id}/color`, params);
+            e.data.color = color;
+            calendar.events.update(e);
+        },
+        init() {
+            app.elements.previous.addEventListener("click", () => {
+                datePicker.select(datePicker.selectionDay.addMonths(-1));
+            });
+
+            app.elements.today.addEventListener("click", () => {
+                datePicker.select(DayPilot.Date.today());
+            });
+
+            app.elements.next.addEventListener("click", () => {
+                datePicker.select(datePicker.selectionDay.addMonths(1));
+            });
+
+            const events = @Html.Raw(Json.Serialize(Model.Tasks.Select(task => new {
+                    id = task.Id,
+                    text = task.Title,
+                    start = task.StartDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    end = task.DueDate.ToString("yyyy-MM-ddTHH:mm:ss"),
+                    tags = new { 
+                        category = task.Category,
+                        priority = task.Priority,
+                        status = task.Status
+                    } 
+                })));
+            events.forEach(event => {
+                event.backColor = (function(priority) {
+                    switch(priority) {
+                        case "High": return "#FF6F5E";  // Red for high priority
+                        case "Medium": return "#AACB73";  // Orange for medium priority
+                        case "Low": return "#6DA9E4";  // Green for low priority
+                        default: return "#FF2171";  // Default color
+                    }
+                })(event.tags.priority);
+            });
+            console.log( events); 
+            calendar.update({ events});
+
+        }
+    };
+    
+    app.init();
+    
+
+
+    function getPriorityColor(priority) {
+        switch(priority) {
+    }
+}
+</script>

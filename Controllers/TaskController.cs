@@ -109,7 +109,7 @@ namespace TaskTracker.Controllers
 
 
         public async Task<IActionResult> GanttChart(string taskCategory, string taskPriority, string taskStatus, string searchString)
-            {
+        {
             var currentUser = await _userManager.GetUserAsync(User);
            
             IQueryable<string> categoryQuery = from m in _context.Category
@@ -243,6 +243,12 @@ namespace TaskTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location,UserId")]Models.Task task)
         {
+            Console.WriteLine("task.StartDate");
+            Console.WriteLine(task.StartDate);
+            Console.WriteLine(task.Title);
+            //Console.WriteLine(task.);
+            Console.WriteLine($"Received task: {Newtonsoft.Json.JsonConvert.SerializeObject(task)}");
+
             var currentUser = await _userManager.GetUserAsync(User);
 
             if (task.ParentTaskId != null)
@@ -260,6 +266,18 @@ namespace TaskTracker.Controllers
                     await _context.SaveChangesAsync();
                 }
                 return RedirectToAction(nameof(Index));
+            }else{
+                 foreach (var modelStateKey in ModelState.Keys)
+                {
+                    var modelStateVal = ModelState[modelStateKey];
+                    foreach (var error in modelStateVal.Errors)
+                    {
+                        var key = modelStateKey;
+                        var errorMessage = error.ErrorMessage;
+                        Console.WriteLine($"Error in {key}: {errorMessage}");
+                    }
+                }
+                return BadRequest(ModelState);
             }
 
             return View(task);
@@ -361,5 +379,116 @@ namespace TaskTracker.Controllers
         {
             return _context.Task.Any(e => e.Id == id);
         }
+
+         public async Task<IActionResult> Calendar(string taskCategory, string taskPriority, string taskStatus, string searchString)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+           
+            IQueryable<string> categoryQuery = from m in _context.Category
+                                    where m.UserId == currentUser.Id
+                                    orderby m.categoryName
+                                    select m.categoryName;
+            IQueryable<string> priorityQuery = from m in _context.Priority
+                                    orderby m.priorityName
+                                    select m.priorityName;
+            IQueryable<string> statusQuery = from m in _context.Status
+                                    orderby m.statusName
+                                    select m.statusName;
+
+            var tasks = from t in _context.Task
+                        where t.UserId == currentUser.Id
+                        select t ;
+            
+            if (!String.IsNullOrEmpty(searchString)){
+                tasks = tasks.Where( s => 
+                    s.Title.ToLower()!.Contains(searchString.ToLower())
+                    ||s.Description.ToLower()!.Contains(searchString.ToLower())) ;
+            }
+
+            if (!string.IsNullOrEmpty(taskCategory))
+            {
+                tasks = tasks.Where(x => x.Category == taskCategory);
+            }
+             if (!string.IsNullOrEmpty(taskPriority))
+            {
+                tasks = tasks.Where(x => x.Priority == taskPriority);
+            }
+            if (!string.IsNullOrEmpty(taskStatus))
+            {
+                tasks = tasks.Where(x => x.Status == taskStatus);
+            }
+              var sortedTasks = new List<Models.Task>();
+            var parentTasks = tasks.Where(t => t.ParentTaskId == null)
+                               .OrderBy(t => t.StartDate)
+                               .ThenBy(t => t.DueDate)
+                               .ThenBy(t => t.Title )
+                               .ThenBy(t => t.Category )
+                               .ThenBy(t => t.Priority );
+        
+            foreach (var parent in parentTasks)
+            {
+                sortedTasks.Add(parent);
+                var subtasks =  tasks.Where(t => t.ParentTaskId == parent.Id)
+                               .OrderBy(t => t.StartDate)
+                               .ThenBy(t => t.DueDate)
+                               .ThenBy(t => t.Title )
+                               .ThenBy(t => t.Category )
+                               .ThenBy(t => t.Priority );
+                foreach (var subTask in subtasks){
+                    sortedTasks.Add(subTask);
+                }
+            }  
+
+            var independentSubtasks = tasks.Where(t => t.ParentTaskId != null && !parentTasks.Any(p => p.Id == t.ParentTaskId))
+             .OrderBy(t => t.StartDate)
+            .ThenBy(t => t.DueDate)
+            .ThenBy(t => t.Title)
+            .ThenBy(t => t.Category)
+            .ThenBy(t => t.Priority);
+
+            sortedTasks.AddRange(independentSubtasks); 
+
+            ViewBag.ParentTask = new SelectList(parentTasks, "Id","Title");
+
+            var taskCategoryVM = new TaskCategoryViewModel{
+                Categories = new SelectList(await categoryQuery.Distinct().ToListAsync()),
+                Priorities = new SelectList(await priorityQuery.Distinct().ToListAsync()),
+                Status = new SelectList(await statusQuery.Distinct().ToListAsync()),
+                Tasks = sortedTasks,
+            };
+            return View(taskCategoryVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CalendarCreate([FromBody]Models.Task task)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (ModelState.IsValid)
+            {   
+                if (task.ParentTaskId != null)
+                {
+                    task.ParentTask = await _context.Task.FindAsync(task.ParentTaskId);
+                }
+                task.UserId = currentUser.Id ;
+                _context.Add(task);
+                await _context.SaveChangesAsync();
+                if(task.ParentTask != null ){
+                    task.ParentTask.subTasks ??= new List<Models.Task>(); 
+                    task.ParentTask.subTasks.Add(task); 
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction(nameof(Calendar));
+            }else{
+                foreach (var entry in ModelState)
+                {
+                    if (entry.Value.Errors.Count > 0)
+                    {
+                        Console.WriteLine($"Error in {entry.Key}: {entry.Value.Errors.Select(e => e.ErrorMessage).FirstOrDefault()}");
+                    }
+                }
+                return Json(new { success = false, message = "Invalid data", errors = ModelState.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()) });
+            }
+        }
+
     }
 }
