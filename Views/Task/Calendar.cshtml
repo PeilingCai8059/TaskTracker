@@ -183,7 +183,7 @@
             calendar.events.add(params);
 
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            fetch('http://localhost:5114/Task/CalendarCreate', {
+            fetch('http://localhost:5220/Task/CalendarCreate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -212,7 +212,7 @@
                         if (confirm("Are you sure you want to delete this Task?")) {
                             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                            fetch(`http://localhost:5114/Task/Delete/${id}`, {
+                            fetch(`http://localhost:5220/Task/Delete/${id}`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
