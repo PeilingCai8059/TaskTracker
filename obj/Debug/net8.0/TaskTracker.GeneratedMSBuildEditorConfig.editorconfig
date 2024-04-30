@@ -17,167 +17,167 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TaskTracker
 build_property.RootNamespace = TaskTracker
-build_property.ProjectDir = /Users/sriramdevata/Documents/TaskTracker/TaskTracker/
+build_property.ProjectDir = /Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/sriramdevata/Documents/TaskTracker/TaskTracker
+build_property.MSBuildProjectDirectory = /Users/harikrishnagonuguntla/ASEP_Project/TaskTracker
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Account/Login.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Account/Register.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWNjb3VudC9SZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Category/Create.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Category/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Category/Delete.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Category/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Category/Details.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Category/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Category/Edit.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Category/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Category/Index.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Category/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Home/Index.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Home/Privacy.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Priority/Create.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Priority/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Priority/Delete.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Priority/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Priority/Details.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Priority/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Priority/Edit.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Priority/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Priority/Index.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Priority/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJpb3JpdHkvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Shared/Error.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Shared/_LoginPartial.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Status/Create.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Status/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Status/Delete.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Status/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0RlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Status/Details.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Status/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0RldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Status/Edit.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Status/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0VkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Status/Index.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Status/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU3RhdHVzL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/Calendar.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/Calendar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9DYWxlbmRhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/Create.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/CreateSubtask.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/CreateSubtask.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9DcmVhdGVTdWJ0YXNrLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/Delete.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9EZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/Details.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9EZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/Edit.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/GanttChart.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/GanttChart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9HYW50dENoYXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Task/Index.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Task/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVGFzay9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/User/Create.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/User/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9DcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/User/Delete.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/User/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9EZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/User/Details.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/User/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9EZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/User/Edit.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/User/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9FZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/User/Index.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVXNlci9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/_ViewImports.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/_ViewStart.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Shared/_Layout.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-70bf190pal
 
-[/Users/sriramdevata/Documents/TaskTracker/TaskTracker/Views/Shared/_Navbar.cshtml]
+[/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/Views/Shared/_Navbar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19OYXZiYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-8skzsnzgou

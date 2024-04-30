@@ -32,6 +32,8 @@ public class Task
     [ValidateDueDate]
     public DateTime DueDate { get; set; }
 
+    public string? ReminderInterval { get; set; }  
+
     [Display(Name = "Reminder")]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
     [DataType(DataType.DateTime)]
@@ -46,6 +48,10 @@ public class Task
     public String? Location  { get; set; }
 
     public ICollection<User>? Collaborators {get;set;} 
+     [Required]
+     public bool IsRecurring { get; set; } // Assuming it's a boolean for Yes/No
+        
+        public string? Frequency { get; set; } // Can be null if IsRecurring is false
 }
 
 public class ValidateDueDateAttribute : ValidationAttribute

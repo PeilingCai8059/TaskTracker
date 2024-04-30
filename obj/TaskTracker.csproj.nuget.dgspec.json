@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/sriramdevata/Documents/TaskTracker/TaskTracker/TaskTracker.csproj": {}
+    "/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/TaskTracker.csproj": {}
   },
   "projects": {
-    "/Users/sriramdevata/Documents/TaskTracker/TaskTracker/TaskTracker.csproj": {
+    "/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/TaskTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/sriramdevata/Documents/TaskTracker/TaskTracker/TaskTracker.csproj",
+        "projectUniqueName": "/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/TaskTracker.csproj",
         "projectName": "TaskTracker",
-        "projectPath": "/Users/sriramdevata/Documents/TaskTracker/TaskTracker/TaskTracker.csproj",
-        "packagesPath": "/Users/sriramdevata/.nuget/packages/",
-        "outputPath": "/Users/sriramdevata/Documents/TaskTracker/TaskTracker/obj/",
+        "projectPath": "/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/TaskTracker.csproj",
+        "packagesPath": "/Users/harikrishnagonuguntla/.nuget/packages/",
+        "outputPath": "/Users/harikrishnagonuguntla/ASEP_Project/TaskTracker/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/sriramdevata/.nuget/NuGet/NuGet.Config"
+          "/Users/harikrishnagonuguntla/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -95,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

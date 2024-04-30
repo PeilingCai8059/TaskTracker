@@ -245,7 +245,7 @@ namespace TaskTracker.Controllers
         // POST: Task/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderTime,Category,Priority,Status,Location,UserId")]Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderInterval,Category,Priority,Status,Location,UserId,IsRecurring,Frequency")]Models.Task task)
         {
             Console.WriteLine("task.StartDate");
             Console.WriteLine(task.StartDate);
@@ -263,6 +263,35 @@ namespace TaskTracker.Controllers
             { 
                 task.UserId = currentUser.Id ;
                  _context.Add(task);
+                task.ReminderTime = CalculateReminderDateTime(task.ReminderInterval, task.DueDate);
+                if(!task.IsRecurring)
+                {
+                    task.Frequency = null;
+                }
+                else
+                {
+                    switch (task.Frequency)
+                    {
+                        case "Daily":
+                            CreateRecurringTasks(task, TimeSpan.FromDays(1));
+                            break;
+                        case "Weekdays":
+                            CreateRecurringTasks(task, TimeSpan.FromDays(1), onlyWeekdays: true);
+                            break;
+                        case "Weekends":
+                            CreateRecurringTasks(task, TimeSpan.FromDays(1), onlyWeekends: true);
+                            break;
+                        case "Weekly":
+                            CreateRecurringTasks(task, TimeSpan.FromDays(7));
+                            break;
+                        case "Biweekly":
+                            CreateRecurringTasks(task, TimeSpan.FromDays(14));
+                            break;
+                        case "Monthly":
+                            CreateRecurringTasks(task, null, monthly: true);
+                            break;
+                    }
+                }
                 await _context.SaveChangesAsync();
                 if(task.ParentTask != null ){
                     task.ParentTask.subTasks ??= new List<Models.Task>(); 
@@ -286,6 +315,95 @@ namespace TaskTracker.Controllers
 
             return View(task);
         }
+
+        private void CreateRecurringTasks(Models.Task baseTask, TimeSpan? interval, bool onlyWeekdays = false, bool onlyWeekends = false, bool monthly = false, int occurrences = 10)
+        {
+            var tasks = new List<Models.Task>();
+            var nextDate = baseTask.StartDate;
+
+            for (int i = 0; i < occurrences; i++)
+            {
+                Console.WriteLine($"Creating Task #{i + 1} for date {nextDate}"); 
+                var newTask = CloneTask(baseTask);
+                newTask.StartDate = nextDate;
+                newTask.DueDate = nextDate + (baseTask.DueDate - baseTask.StartDate);
+                tasks.Add(newTask);
+
+                // Determine the next date based on the recurrence type
+                if (monthly)
+                {
+                    nextDate = nextDate.AddMonths(1); // Increment by one month
+                }
+                else
+                {
+                    do
+                    {
+                        nextDate = nextDate.Add(interval.GetValueOrDefault()); // Increment by the interval
+                    }
+                    while (
+                        (onlyWeekdays && (nextDate.DayOfWeek == DayOfWeek.Saturday || nextDate.DayOfWeek == DayOfWeek.Sunday)) || 
+                        (onlyWeekends && (nextDate.DayOfWeek != DayOfWeek.Saturday && nextDate.DayOfWeek != DayOfWeek.Sunday))
+                    );
+                }
+            }
+
+            _context.Task.AddRange(tasks); // Ensure that the context's DbSet name matches your actual DbSet
+            _context.SaveChanges();
+        }
+
+
+        private Models.Task CloneTask(Models.Task taskToClone)
+        {
+            return new Models.Task
+            {
+                Title = taskToClone.Title,
+                Description = taskToClone.Description,
+                ParentTaskId = taskToClone.ParentTaskId,
+                StartDate = taskToClone.StartDate,
+                DueDate = taskToClone.DueDate,
+                ReminderTime = taskToClone.ReminderTime,
+                Category = taskToClone.Category,
+                Priority = taskToClone.Priority,
+                Status = taskToClone.Status,
+                Location = taskToClone.Location,
+                UserId = taskToClone.UserId,
+                // IsRecurring and Frequency are not copied since each occurrence is an independent task
+            };
+        }
+
+        private DateTime? CalculateReminderDateTime(string reminderInterval, DateTime dueDate)
+        {
+            if (string.IsNullOrEmpty(reminderInterval))
+                return null;
+
+            TimeSpan timeSpan;
+            switch (reminderInterval)
+            {
+                case "5 minutes":
+                    timeSpan = TimeSpan.FromMinutes(5);
+                    break;
+                case "15 minutes":
+                    timeSpan = TimeSpan.FromMinutes(15);
+                    break;
+                case "30 minutes":
+                    timeSpan = TimeSpan.FromMinutes(30);
+                    break;
+                case "1 hour":
+                    timeSpan = TimeSpan.FromHours(1);
+                    break;
+                case "12 hours":
+                    timeSpan = TimeSpan.FromHours(12);
+                    break;
+                case "1 day":
+                    timeSpan = TimeSpan.FromDays(1);
+                    break;
+                default:
+                    return null;
+            }
+
+            return dueDate - timeSpan;
+        }
+
 
         // GET: Task/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -493,4 +611,5 @@ namespace TaskTracker.Controllers
                 return Json(new { success = false, message = "Invalid data", errors = ModelState.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()) });
             }
         }
+    }
 }

@@ -3,11 +3,10 @@
 @{
     ViewData["Title"] = "Create";
 }
+
 <div class="actionTitle">
    <h1>Create a New Task</h1> 
 </div>
-
-
 
 <hr />
 <div class="row">
@@ -32,7 +31,6 @@
                 </select>
                 <span asp-validation-for="ParentTaskId" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
@@ -44,9 +42,17 @@
                 <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReminderTime" class="control-label"></label>
-                <input asp-for="ReminderTime" class="form-control" />
-                <span asp-validation-for="ReminderTime" class="text-danger"></span>
+                <label asp-for="ReminderInterval" class="control-label"></label>
+                <select asp-for="ReminderTime" class="form-control">
+                    <option value="">--Select Reminder--</option>
+                    <option value="5 minutes">5 minutes before</option>
+                    <option value="15 minutes">15 minutes before</option>
+                    <option value="30 minutes">30 minutes before</option>
+                    <option value="1 hour">1 hour before</option>
+                    <option value="12 hours">12 hours before</option>
+                    <option value="1 day">1 day before</option>
+                </select>
+                <span asp-validation-for="ReminderInterval" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
@@ -57,7 +63,6 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryModal">
                     + Category
                 </button>
-
             </div>
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
@@ -78,6 +83,30 @@
                 <input asp-for="Location" class="form-control" />
                 <span asp-validation-for="Location" class="text-danger"></span>
             </div>
+            <!-- Recurring Option -->
+            <div class="form-group">
+                <label asp-for="IsRecurring" class="control-label">Recurring</label>
+                <select asp-for="IsRecurring" id="recurringDropdown" class="form-control">
+                    <option value="">--Select Option--</option>
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+                <span asp-validation-for="IsRecurring" class="text-danger"></span>
+            </div>
+            <!-- Frequency Option -->
+            <div class="form-group" id="frequencyDiv" style="display: none;">
+                <label asp-for="Frequency" class="control-label">Frequency</label>
+                <select asp-for="Frequency" class="form-control">
+                    <option value="">--Select Frequency--</option>
+                    <option value="Daily">Daily</option>
+                    <option value="Weekdays">Weekdays</option>
+                    <option value="Weekends">Weekends</option>
+                    <option value="Weekly">Weekends</option>
+                    <option value="Biweekly">Biweekly</option>
+                    <option value="Monthly">Monthly</option>
+                </select>
+                <span asp-validation-for="Frequency" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -95,7 +124,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="categoryModalLabel">Create New Category</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type of="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -105,23 +134,28 @@
                 <label for="categoryName" class="col-form-label">Category Name:</label>
                 <input type="text" class="form-control" id="categoryName" name="categoryName">
             </div>
-            <!-- Include other fields if necessary -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <input type="submit" class="btn btn-primary" value="Save Category"/>
         </div>
       </form>
-      <div id="formMessageContainer"></div>
-
     </div>
   </div>
 </div>
 
-
 @section Scripts {
     <script>
     $(document).ready(function() {
+        $('#recurringDropdown').change(function() {
+            var selectedValue = $(this).val();
+            if (selectedValue === "true") {
+                $('#frequencyDiv').show();
+            } else {
+                $('#frequencyDiv').hide();
+            }
+        });
+
         $('#newCategoryForm').submit(function(event) {
             event.preventDefault(); 
             var formData = $(this).serialize(); 
@@ -131,22 +165,19 @@
                 url: '/Category/Create',
                 data: formData,
                 success: function(response) {
-                $('#Category').find('option:not(:first)').remove();
-
-             // Repopulate the dropdown with updated categories
-            response.categories.forEach(function(category) {
-                $('#Category').append($('<option>', {
-                    value: category.categoryName,
-                    text: category.categoryName
-                    }));
-                });
-                $('#categoryModal').modal('hide');
-                $('#formMessageContainer').html('<div class="alert alert-success" role="alert">Category successfully added.</div>');
-                    },
-                    error: function(response) {
-                        // Handle error
-                        alert("There was an error. Please try again.");
-                    }
+                    $('#Category').find('option:not(:first)').remove();
+                    response.categories.forEach(function(category) {
+                        $('#Category').append($('<option>', {
+                            value: category.categoryName,
+                            text: category.categoryName
+                        }));
+                    });
+                    $('#categoryModal').modal('hide');
+                    $('#formMessageContainer').html('<div class="alert alert-success" role="alert">Category successfully added.</div>');
+                },
+                error: function(response) {
+                    alert("There was an error. Please try again.");
+                }
             });
         });
     });
