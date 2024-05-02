@@ -20,19 +20,24 @@ public class Task
     public ICollection<Task>? subTasks {get;set;}
     
     [Required] 
-    [DataType(DataType.Date)]
+    [DataType(DataType.DateTime)]
     [Display(Name = "Start Date")]
-    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
     public DateTime StartDate { get; set; }
 
     [Required]
     [Display(Name = "Due Date")]
-    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-    [DataType(DataType.Date)]
+    [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
+    [DataType(DataType.DateTime)]
     [ValidateDueDate]
     public DateTime DueDate { get; set; }
 
+    [Display(Name = "ReminderInterval")]
     public string? ReminderInterval { get; set; }  
+
+    [Display(Name = "IsRecurring")]
+    [Required]
+    public Boolean IsRecurring { get; set; } 
 
     [Display(Name = "Reminder")]
     [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
@@ -48,10 +53,13 @@ public class Task
     public String? Location  { get; set; }
 
     public ICollection<User>? Collaborators {get;set;} 
-     [Required]
-     public bool IsRecurring { get; set; } // Assuming it's a boolean for Yes/No
-        
-        public string? Frequency { get; set; } // Can be null if IsRecurring is false
+    public string? Frequency { get; set; } // Can be null if IsRecurring is false
+
+    [Display(Name = "Is Group Task")]
+    public bool IsGroupTask { get; set; }
+
+    [Display(Name = "Share with")]
+    public List<string>? SharedWithUsers { get; set; }
 }
 
 public class ValidateDueDateAttribute : ValidationAttribute

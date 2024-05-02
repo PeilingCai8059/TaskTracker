@@ -48,9 +48,15 @@ namespace TaskTracker.Controllers
                                     select m.statusName;
 
             var tasks = from t in _context.Task
-                        where t.UserId == currentUser.Id
-                        select t ;
+                where t.UserId == currentUser.Id || t.SharedWithUsers.Any(u => u == currentUser.Id)
+                select t;
             
+             Console.WriteLine($"Tasks received are");
+            foreach (var task in tasks)
+            {
+                Console.WriteLine($"Received task from DB: {Newtonsoft.Json.JsonConvert.SerializeObject(task)}");
+            }
+
             
             if (!String.IsNullOrEmpty(searchString)){
                 tasks = tasks.Where( s => 
@@ -208,10 +214,24 @@ namespace TaskTracker.Controllers
         }
 
         // GET: Task/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var model = new Models.Task();
+            
             LoadInfoAsync();
-            return View();
+            var users = await _userManager.Users.ToListAsync();
+            var usersSelectList = new List<SelectListItem>();
+            foreach (var user in users)
+            {
+                usersSelectList.Add(new SelectListItem
+                {
+                    Value = user.Id.ToString(), // Assuming Id is the unique identifier for users
+                    Text = user.FirstName + ' ' + user.LastName // Assuming Name is the property representing the user's name
+                });
+            }
+
+            ViewBag.Users = usersSelectList;
+            return View(model);
         }
 
         public  async Task<IActionResult>  CreateSubtask (int? id)
@@ -245,7 +265,7 @@ namespace TaskTracker.Controllers
         // POST: Task/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderInterval,Category,Priority,Status,Location,UserId,IsRecurring,Frequency")]Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ParentTaskId,StartDate,DueDate,ReminderInterval,Category,Priority,Status,Location,UserId,IsRecurring,Frequency, IsGroupTask, SharedWithUsers")]Models.Task task)
         {
             Console.WriteLine("task.StartDate");
             Console.WriteLine(task.StartDate);
@@ -262,8 +282,10 @@ namespace TaskTracker.Controllers
             if (ModelState.IsValid)
             { 
                 task.UserId = currentUser.Id ;
-                 _context.Add(task);
+                Console.WriteLine($"Task reminder interval is {task.ReminderInterval}");
                 task.ReminderTime = CalculateReminderDateTime(task.ReminderInterval, task.DueDate);
+                Console.WriteLine($"Task reminder time is {task.ReminderTime.ToString()}");
+                _context.Add(task);
                 if(!task.IsRecurring)
                 {
                     task.Frequency = null;
@@ -316,7 +338,7 @@ namespace TaskTracker.Controllers
             return View(task);
         }
 
-        private void CreateRecurringTasks(Models.Task baseTask, TimeSpan? interval, bool onlyWeekdays = false, bool onlyWeekends = false, bool monthly = false, int occurrences = 10)
+        private void CreateRecurringTasks(Models.Task baseTask, TimeSpan? interval, bool onlyWeekdays = false, bool onlyWeekends = false, bool monthly = false, int occurrences = 30)
         {
             var tasks = new List<Models.Task>();
             var nextDate = baseTask.StartDate;
@@ -367,6 +389,8 @@ namespace TaskTracker.Controllers
                 Status = taskToClone.Status,
                 Location = taskToClone.Location,
                 UserId = taskToClone.UserId,
+                IsGroupTask = taskToClone.IsGroupTask,
+                SharedWithUsers = taskToClone.SharedWithUsers
                 // IsRecurring and Frequency are not copied since each occurrence is an independent task
             };
         }
@@ -419,6 +443,8 @@ namespace TaskTracker.Controllers
                 return NotFound();
             }
             LoadInfoAsync();
+
+            _logger.LogInformation($"Task data: {task.ReminderTime}");
             return View(task);
         }
 
@@ -469,7 +495,7 @@ namespace TaskTracker.Controllers
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
+        {
                 return NotFound();
             }
 

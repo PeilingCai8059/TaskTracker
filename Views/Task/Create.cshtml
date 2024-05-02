@@ -33,17 +33,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                <input asp-for="StartDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DueDate" class="control-label"></label>
-                <input asp-for="DueDate" class="form-control" />
+                <input asp-for="DueDate" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
                 <span asp-validation-for="DueDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ReminderInterval" class="control-label"></label>
-                <select asp-for="ReminderTime" class="form-control">
+                <select asp-for="ReminderInterval" class="form-control">
                     <option value="">--Select Reminder--</option>
                     <option value="5 minutes">5 minutes before</option>
                     <option value="15 minutes">15 minutes before</option>
@@ -106,6 +106,22 @@
                     <option value="Monthly">Monthly</option>
                 </select>
                 <span asp-validation-for="Frequency" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsGroupTask" class="control-label">Is Group Task</label>
+                <select asp-for="IsGroupTask" id="groupTaskDropdown" class="form-control">
+                    <option value="">--Select Option--</option>
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                </select>
+                <span asp-validation-for="IsGroupTask" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" id="shareWithDiv" style="display: none;">
+                <label asp-for="SharedWithUsers" class="control-label">Share with</label>
+                <select asp-for="SharedWithUsers" asp-items="@ViewBag.Users" multiple class="form-control">
+                </select>
+                <span asp-validation-for="SharedWithUsers" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -179,6 +195,15 @@
                     alert("There was an error. Please try again.");
                 }
             });
+        });
+
+        $('#groupTaskDropdown').change(function() {
+            var selectedValue = $(this).val();
+            if (selectedValue === "true") {
+                $('#shareWithDiv').show();
+            } else {
+                $('#shareWithDiv').hide();
+            }
         });
     });
     </script>

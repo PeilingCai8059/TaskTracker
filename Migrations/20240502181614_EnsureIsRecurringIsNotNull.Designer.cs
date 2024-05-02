@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskTracker.Data;
 
@@ -10,9 +11,11 @@ using TaskTracker.Data;
 namespace TaskTracker.Migrations
 {
     [DbContext(typeof(TaskTrackerContext))]
-    partial class TaskTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20240502181614_EnsureIsRecurringIsNotNull")]
+    partial class EnsureIsRecurringIsNotNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
@@ -287,9 +290,6 @@ namespace TaskTracker.Migrations
                     b.Property<string>("Frequency")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsGroupTask")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsRecurring")
                         .HasColumnType("INTEGER");
 
@@ -306,9 +306,6 @@ namespace TaskTracker.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("ReminderTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SharedWithUsers")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartDate")
