@@ -51,7 +51,7 @@ namespace TaskTracker.Controllers
                 where t.UserId == currentUser.Id || t.SharedWithUsers.Any(u => u == currentUser.Id)
                 select t;
             
-             Console.WriteLine($"Tasks received are");
+            Console.WriteLine($"Tasks received are");
             foreach (var task in tasks)
             {
                 Console.WriteLine($"Received task from DB: {Newtonsoft.Json.JsonConvert.SerializeObject(task)}");

@@ -21,5 +21,6 @@ namespace TaskTracker.Data
         public DbSet<TaskTracker.Models.Category> Category { get; set; } = default!;
         public DbSet<TaskTracker.Models.Priority> Priority { get; set; } = default!;
         public DbSet<TaskTracker.Models.Status> Status { get; set; } = default!;
+        public DbSet<TaskTracker.Models.Suggestion> Suggestion { get; set; } = default!;
     }
 }
